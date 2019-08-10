@@ -15,6 +15,16 @@ export default new Router({
       path: '/index',
       name: 'index',
       component: () => import(/* webpackChunkName: "index" */ './views/Index.vue')
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: () => import(/* webpackChunkName: "register" */ './views/register/Register.vue')
+    },
+    {
+      path: '*',
+      name: 'notFound',
+      component: () => import(/* webpackChunkName: "error" */ './views/error/404.vue')
     }
   ]
 })

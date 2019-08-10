@@ -1,27 +1,57 @@
-const BASE_URL = process.env.NODE_ENV === 'production' ? '/pc/' : '/'
+const path = require('path')
+const debug = process.env.NODE_ENV !== 'production'
 
 module.exports = {
-    // 项目部署基础
-    // 默认情况下，我们假设你的应用将被部署在域的根目录下,
-    // 例如：https://www.my-app.com/
-    // 默认：'/'
-    // 如果您的应用程序部署在子路径中，则需要在这指定子路径
-    // 例如：https://www.foobar.com/my-app/
-    // 需要将它改为'/my-app/'
-    publicPath: BASE_URL,
-    // 如果不需要使用eslint，把lintOnSave设为false即可
-    lintOnSave: false,
-    // 将构建好的文件输出到哪里
-    outputDir: 'dist',
-    // 放置静态资源的地方 (js/css/img/font/...)
-    assetsDir: 'static',
-
-    chainWebpack: () => { },
-    // 打包时不生成.map文件
-    productionSourceMap: false,
-    // 这里写你调用接口的基础路径，来解决跨域，如果设置了代理，那你本地开发环境的axios的baseUrl要写为 '' ，即空字符串
+    publicPath: '/', // 根域上下文目录
+    outputDir: 'dist', // 构建输出目录
+    assetsDir: 'assets', // 静态资源目录 (js, css, img, fonts)
+    lintOnSave: false, // 是否开启eslint保存检测，有效值：ture | false | 'error'
+    runtimeCompiler: true, // 运行时版本是否需要编译
+    transpileDependencies: [], // 默认babel-loader忽略mode_modules，这里可增加例外的依赖包名
+    productionSourceMap: true, // 是否在构建生产包时生成 sourceMap 文件，false将提高构建速度
+    configureWebpack: config => { // webpack配置，值位对象时会合并配置，为方法时会改写配置
+        if (debug) { // 开发环境配置
+            config.devtool = 'cheap-module-eval-source-map'
+        } else { // 生产环境配置
+        }
+        Object.assign(config, { // 开发生产共同配置
+            resolve: {
+                alias: {
+                    '@': path.resolve(__dirname, './src'),
+                    // '@c': path.resolve(__dirname, './src/components'),
+                    // 'vue$': 'vue/dist/vue.esm.js'
+                }
+            }
+        })
+    },
+    chainWebpack: config => { // webpack链接API，用于生成和修改webapck配置，https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
+        if (debug) {
+            // 本地开发配置
+        } else {
+            // 生产开发配置
+        }
+    },
+    parallel: require('os').cpus().length > 1, // 构建时开启多进程处理babel编译
+    pluginOptions: { // 第三方插件配置
+    },
+    pwa: { // 单页插件相关配置 https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa
+    },
     devServer: {
-        // proxy: 'localhost:3000'
-        disableHostCheck: true
+        open: true,
+        host: 'localhost',
+        port: 8080,
+        https: false,
+        hotOnly: false,
+        proxy: { // 配置跨域
+            '/api': {
+                target: 'http://localhost:5000/api/',
+                ws: true,
+                changOrigin: true,
+                pathRewrite: {
+                    '^/api': ''
+                }
+            }
+        },
+        before: app => { }
     }
 }
