@@ -49,7 +49,7 @@ export default {
       }
     },
     showInfoList() {
-      console.log("show");
+      this.$router.push("/userInfo");
     },
     logout() {
       localStorage.removeItem("TOKEN");
@@ -107,7 +107,6 @@ export default {
         line-height: 20px;
         text-align: center;
         font-size: 14px;
-        margin: 0;
       }
       .comename {
         font-size: 12px;

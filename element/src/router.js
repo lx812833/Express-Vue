@@ -17,7 +17,24 @@ const router = new Router({
     {
       path: '/index',
       name: 'index',
-      component: () => import(/* webpackChunkName: "index" */ './views/Index.vue')
+      component: () => import(/* webpackChunkName: "index" */ './views/Index.vue'),
+      children: [
+        {
+          path: "/index",
+          name: 'home',
+          component: () => import(/* webpackChunkName: "index" */ './views/home/Home.vue'),
+        },
+        {
+          path: "/home",
+          name: "home",
+          component: () => import(/* webpackChunkName: "index" */ './views/home/Home.vue'),
+        },
+        {
+          path: "/userInfo",
+          name: "userInfo",
+          component: () => import(/* webpackChunkName: "index" */ './views/userInfo/UserInfo.vue'),
+        }
+      ]
     },
     {
       path: '/register',
