@@ -52,9 +52,12 @@ router.post("/login", (req, res) => {
                 .then(isMatch => {
                     if (isMatch) {
                         // jwt.sign("规则", "加密名字", "过期时间", "箭头函数")
+                        // 前端解析token获取用户信息
                         const rule = {
                             id: user.id,
-                            name: user.name
+                            name: user.name,
+                            identity: user.identity,
+                            avatar: user.avatar
                         }
                         jwt.sign(rule, "secret", { expiresIn: 3600 }, (err, token) => {
                             if (err) throw err

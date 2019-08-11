@@ -25,7 +25,7 @@
 </template>
 
 <script>
-// import jwt_decode from "jwt-decode";
+import jwt_decode from "jwt-decode";
 
 export default {
   name: "login",
@@ -59,12 +59,12 @@ export default {
             // 登录成功
             const { token } = res.data;
             localStorage.setItem("TOKEN", token);
-            // // 解析token
-            // const decode = jwt_decode(token);
-            // // 存储数据
-            // this.$store.dispatch("setIsAutnenticated", !this.isEmpty(decode));
-            // this.$store.dispatch("setUser", decode);
-            // this.$router.push("/index");
+            // 解析token
+            const decode = jwt_decode(token);
+            // token存储到vuex中
+            this.$store.dispatch("setAutnenticated", !this.isEmpty(decode));
+            this.$store.dispatch("setUser", decode);
+            this.$router.push("/index");
           });
         } else {
           console.log("error submit!!");
@@ -72,6 +72,7 @@ export default {
         }
       });
     },
+    // 判断是否为空
     isEmpty(value) {
       return (
         value === undefined ||
