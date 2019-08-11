@@ -2,6 +2,8 @@ import axios from 'axios';
 import { Loading, Message } from 'element-ui';
 import router from "../router";
 
+// 超时处理
+
 let loading;
 const startLoading = () => {
     loading = Loading.service({

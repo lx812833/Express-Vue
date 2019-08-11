@@ -1,44 +1,22 @@
 <template>
-  <div class="fillcontainer">
-    <div>
-      <el-form
-        :inline="true"
-        ref="search_data"
-        :model='search_data'
-      >
+  <div class="fill-container">
+    <div class="head-container">
+      <el-form :inline="true" ref="search_data" :model='search_data'>
         <el-form-item label="投标时间筛选:">
-          <el-date-picker
-            v-model="search_data.startTime"
-            type="datetime"
-            placeholder="选择开始时间"
-          >
+          <el-date-picker v-model="search_data.startTime" type="datetime" placeholder="选择开始时间">
           </el-date-picker> --
-          <el-date-picker
-            v-model="search_data.endTime"
-            type="datetime"
-            placeholder="选择结束时间"
-          >
+          <el-date-picker v-model="search_data.endTime" type="datetime" placeholder="选择结束时间">
           </el-date-picker>
         </el-form-item>
         <el-form-item>
-          <el-button
-            type="primary"
-            size="small"
-            icon="search"
-            @click='onScreeoutMoney()'
-          >筛选</el-button>
+          <el-button type="primary" size="small" icon="search" @click='onScreeoutMoney()'>筛选</el-button>
         </el-form-item>
         <el-form-item class="btnRight">
-          <el-button
-            type="primary"
-            size="small"
-            icon="view"
-            @click='onAddMoney()'
-          >添加</el-button>
+          <el-button type="primary" size="small" icon="view" @click='onAddMoney()'>添加</el-button>
         </el-form-item>
       </el-form>
     </div>
-    <div class="table_container">
+    <div class="table-container">
       <el-table
         v-if="tableData.length > 0"
         :data='tableData'
@@ -47,65 +25,27 @@
         :default-sort="{prop: 'date', order: 'descending'}"
         style="width: 100%"
       >
-        <el-table-column
-          type="index"
-          label="序号"
-          align='center'
-          width="70"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="date"
-          label="创建时间"
-          align='center'
-          width="250"
-          sortable
-        >
+        <el-table-column type="index" label="序号" align='center' width="60"></el-table-column>
+        <el-table-column prop="date" label="创建时间" align='center' width="240" sortable>
           <template slot-scope="scope">
             <el-icon name="time"></el-icon>
             <span style="margin-left: 10px">{{ scope.row.date }}</span>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="type"
-          label="收支类型"
-          align='center'
-          width="150"
-        >
+        <el-table-column prop="type" label="收支类型" align='center' width="100"></el-table-column>
+        <el-table-column prop="describe" label="收支描述" align='center' width="130">
         </el-table-column>
-        <el-table-column
-          prop="describe"
-          label="收支描述"
-          align='center'
-          width="180"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="income"
-          label="收入"
-          align='center'
-          width="170"
-        >
+        <el-table-column prop="income" label="收入" align='center' width="90">
           <template slot-scope="scope">
             <span style="color:#00d053">+ {{ scope.row.income }}</span>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="expend"
-          label="支出"
-          align='center'
-          width="170"
-        >
+        <el-table-column prop="expend" label="支出" align='center' width="90">
           <template slot-scope="scope">
             <span style="color:#f56767">- {{ scope.row.expend }}</span>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="cash"
-          label="账户现金"
-          align='center'
-          width="170"
-        >
+        <el-table-column prop="cash" label="账户现金" align='center' width="130">
           <template slot-scope="scope">
             <span style="color:#4db3ff">{{ scope.row.cash }}</span>
           </template>
@@ -121,10 +61,14 @@
           prop="operation"
           align='center'
           label="操作"
-          fixed="right"
-          width="180"
         >
           <template slot-scope='scope'>
+            <el-button
+              type="success"
+              icon='delete'
+              size="small"
+              @click='onEditMoney(scope.row)'
+            >详情</el-button>
             <el-button
               type="warning"
               icon='edit'
@@ -133,7 +77,7 @@
             >编辑</el-button>
             <el-button
               type="danger"
-              icon='delete'
+              icon="delete"
               size="small"
               @click='onDeleteMoney(scope.row,scope.$index)'
             >删除</el-button>
@@ -160,11 +104,7 @@
       </el-row>
     </div>
     <!-- 弹框页面 -->
-    <DialogFound
-      :dialog='dialog'
-      :form='form'
-      @update="getProfile"
-    ></DialogFound>
+    <DialogFound :dialog='dialog' :form='form' @update="getProfile"></DialogFound>
   </div>
 </template>
 
@@ -240,7 +180,7 @@ export default {
     },
     onDeleteMoney(row, index) {
       // 删除
-      this.$axios.delete(`/api/profile/delete/${row._id}`).then(res => {
+      this.$axios.delete(`/api/profiles/delete/${row._id}`).then(res => {
         this.$message("删除成功");
         this.getProfile();
       });
@@ -314,18 +254,25 @@ export default {
   }
 };
 </script>
-<style scoped>
-.fillcontainer {
+<style lang="less" scoped>
+.fill-container {
   width: 100%;
   height: 100%;
   padding: 16px;
   box-sizing: border-box;
-}
-.btnRight {
-  float: right;
-}
-.pagination {
-  text-align: right;
-  margin-top: 10px;
+  .head-container {
+    width: 100%;
+    height: 50px;
+    .btnRight {
+      float: right;
+    }
+  }
+  .table-container {
+    width: 100%;
+    .pagination {
+      text-align: right;
+      margin-top: 10px;
+    }
+  }
 }
 </style>
