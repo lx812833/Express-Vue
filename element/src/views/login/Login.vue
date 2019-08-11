@@ -57,8 +57,8 @@ export default {
         if (valid) {
           this.$axios.post("/api/users/login", this.loginUser).then(res => {
             // 登录成功
-            // const { token } = res.data;
-            // localStorage.setItem("TOKEN", token);
+            const { token } = res.data;
+            localStorage.setItem("TOKEN", token);
             // // 解析token
             // const decode = jwt_decode(token);
             // // 存储数据
