@@ -1,8 +1,10 @@
-const express = require("../../node_modules/express")
-const router = express.Router()
-const passport = require("../../node_modules/passport/lib")
+const express = require("express");
+const router = express.Router();
+const passport = require("passport");
+const mongoose = require("mongoose");
+mongoose.set('useFindAndModify', false);
 
-const Profile = require("../../database/schema/Profile")
+const Profile = require("../../database/schema/Profile");
 /**
  * 添加信息
  */
@@ -72,7 +74,7 @@ router.post("/edit/:id", passport.authenticate("jwt", { session: false }), (req,
  * 删除信息
  */
 router.delete("/delete/:id", passport.authenticate("jwt", { session: false }), (req, res) => {
-    Profile.findOneAndRemove({ _id: req.params.id })
+    Profile.findOneAndDelete({ _id: req.params.id })
         .then(profile => {
             profile.save().then(profile => res.json(profile))
         })

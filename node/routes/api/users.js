@@ -1,10 +1,10 @@
-const express = require("../../node_modules/express")
-const router = express.Router()
-const gravatar = require("../../node_modules/gravatar")
-const jwt = require('../../node_modules/jsonwebtoken')
-const passport = require("../../node_modules/passport/lib")
+const express = require("express");
+const router = express.Router();
+const gravatar = require("gravatar");
+const jwt = require('jsonwebtoken');
+const passport = require("passport");
 // bcrypt加密
-const bcrypt = require('../../node_modules/bcrypt/bcrypt')
+const bcrypt = require('bcrypt/bcrypt')
 // 加盐长度
 const SALT_WORK_FACTOR = 10
 

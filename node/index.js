@@ -1,7 +1,7 @@
-const express = require("./node_modules/express");
-const mongoose = require("mongoose");
-const bodyParser = require("./node_modules/body-parser");
-const passport = require("./node_modules/passport/lib");
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const passport = require('passport');
 const app = express();
 
 // 连接数据库
