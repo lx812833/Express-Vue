@@ -9,12 +9,12 @@ const Profile = require("../../database/schema/Profile")
 //passport 验证token 
 router.post("/add", passport.authenticate("jwt", { session: false }), (req, res) => {
     const profileFields = {}
-    if (res.body.type) profileFields.type = req.body.type
-    if (res.body.describe) profileFields.describe = req.body.describe
-    if (res.body.income) profileFields.income = req.body.income
-    if (res.body.expend) profileFields.expend = req.body.expend
-    if (res.body.cash) profileFields.cash = req.body.cash
-    if (res.body.remark) profileFields.remark = req.body.remark
+    if (req.body.type) profileFields.type = req.body.type
+    if (req.body.describe) profileFields.describe = req.body.describe
+    if (req.body.income) profileFields.income = req.body.income
+    if (req.body.expend) profileFields.expend = req.body.expend
+    if (req.body.cash) profileFields.cash = req.body.cash
+    if (req.body.remark) profileFields.remark = req.body.remark
 
     new Profile(profileFields).save().then(profile => {
         res.json(profile)
