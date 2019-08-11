@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+// nprogress 页面加载进度条
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 
 Vue.use(Router)
 
@@ -42,6 +45,11 @@ router.beforeEach((to, from, next) => {
   } else {
     isLogin ? next() : next("/login")
   }
+  NProgress.start()
+})
+
+router.afterEach(route => {
+  NProgress.done()
 })
 
 export default router;

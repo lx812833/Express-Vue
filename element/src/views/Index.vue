@@ -1,12 +1,16 @@
 <template>
   <div class="index">
-    初始化
+    <HeadNav />
   </div>
 </template>
 
 <script>
+import HeadNav from "@/components/HeadNav.vue";
 export default {
-  name: "index"
+  name: "index",
+  components: {
+    HeadNav
+  }
 };
 </script>
 <style lang="less" scoped>

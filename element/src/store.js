@@ -36,7 +36,12 @@ const actions = {
   },
   setUser: ({ commit }, user) => {
     commit(types.SET_USER, user)
-  }
+  },
+  // 退出清楚当前状态
+  clearCurrentState: ({ commit }) => {
+    commit(types.SET_AUTNENTICATED, false);
+    commit(types.SET_USER, null);
+  },
 }
 
 export default new Vuex.Store({

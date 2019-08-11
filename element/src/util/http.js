@@ -34,16 +34,27 @@ axios.interceptors.response.use(response => {
     endLoading();
     return response;
 }, error => {
-    endLoading();
-    // 统一错误提示
-    Message.error(error.response.data);
     const { status } = error.response;
-    if (status === 401) {
-        Message.error("长时间未登陆，请重新登录！");
-        localStorage.removeItem("TOKEN");
-        // 跳转到登录页面
-        router.push("/login");
+    if (error.response) {
+        switch (status) {
+            case 401:
+                Message.error("长时间未登陆，请重新登录！");
+                router.push("/login");
+                break;
+            case 404:
+                router.push("*");
+                break;
+            case 500:
+                Message.error("服务器异常！");
+                break;
+            default:
+                // 统一错误提示
+                Message.error(error.response.data);
+                break;
+        }
     }
+    endLoading();
+    localStorage.removeItem("TOKEN");
     return Promise.reject(error);
 })
 
