@@ -33,6 +33,11 @@ const router = new Router({
           path: "/userInfo",
           name: "userInfo",
           component: () => import(/* webpackChunkName: "index" */ './views/userInfo/UserInfo.vue'),
+        },
+        {
+          path: "/fundlist",
+          name: "fundlist",
+          component: () => import(/* webpackChunkName: "index" */ './views/fund/FundList.vue'),
         }
       ]
     },
@@ -58,11 +63,12 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   const isLogin = localStorage.TOKEN ? true : false;
   if (to.path === "/login" || to.path === "/register") {
+    NProgress.start()
     next()
   } else {
+    NProgress.start()
     isLogin ? next() : next("/login")
   }
-  NProgress.start()
 })
 
 router.afterEach(route => {
