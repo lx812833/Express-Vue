@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import { addProfile, editProfile } from "@/api/fund"
 export default {
   name: "logfound",
   props: {
@@ -84,15 +85,23 @@ export default {
     onSubmit(form) {
       this.$refs[form].validate(valid => {
         if (valid) {
-          const url = this.dialog.option == "add" ? "add" : `edit/${this.form.id}`;
-          this.$axios.post(`/api/profiles/${url}`, this.form).then(res => {
-            this.$message({
-              message: "添加成功！",
-              type: "success"
+          if(this.dialog.option === "add") {
+            addProfile(this.form).then(res => {
+              this.$message({
+                message: "添加成功！",
+                type: "success"
+              });
             });
-            this.dialog.show = false;
-            this.$emit("update");
-          });
+          } else {
+            editProfile(this.form.id).then(res => {
+              this.$message({
+                message: "编辑成功！",
+                type: "success"
+              });
+            });
+          }
+          this.dialog.show = false;
+          this.$emit("update");
         }
       });
     }

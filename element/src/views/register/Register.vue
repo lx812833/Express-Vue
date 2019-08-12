@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { register } from "@/api/user"
 export default {
   name: "register",
   data() {
@@ -84,7 +85,7 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$axios.post("/api/users/register", this.registerUser)
+          register(this.registerUser)
             .then(res => {
               // 注册成功
               this.$message({

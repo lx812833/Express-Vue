@@ -109,6 +109,7 @@
 </template>
 
 <script>
+import { getProfiles, deleteProfile } from "@/api/fund"
 import DialogFound from "@/components/DialogFound.vue";
 
 export default {
@@ -154,7 +155,7 @@ export default {
   },
   methods: {
     getProfile() {
-      this.$axios.get("/api/profiles").then(res => {
+      getProfiles().then(res => {
         this.allTableData = res.data;
         this.filterTableData = res.data;
         // 设置分页数据
@@ -180,7 +181,7 @@ export default {
     },
     onDeleteMoney(row, index) {
       // 删除
-      this.$axios.delete(`/api/profiles/delete/${row._id}`).then(res => {
+      deleteProfile(row._id).then(res => {
         this.$message("删除成功");
         this.getProfile();
       });

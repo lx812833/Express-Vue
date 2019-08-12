@@ -26,6 +26,7 @@
 
 <script>
 import jwt_decode from "jwt-decode";
+import { login } from "@/api/user"
 
 export default {
   name: "login",
@@ -55,7 +56,7 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$axios.post("/api/users/login", this.loginUser).then(res => {
+          login(this.loginUser).then(res => {
             // 登录成功
             const { token } = res.data;
             localStorage.setItem("TOKEN", token);
@@ -65,9 +66,11 @@ export default {
             this.$store.dispatch("setAutnenticated", !this.isEmpty(decode));
             this.$store.dispatch("setUser", decode);
             this.$router.push("/index");
-          });
+          })
+          .catch(error => {
+            // 由于在request统一处理了请求失败回执，此处不再做出处理
+          })
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
