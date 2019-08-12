@@ -45,7 +45,7 @@ router.post("/login", (req, res) => {
     User.findOne({ email })
         .then(user => {
             if (!user) {
-                return res.status(404).json("用户不存在")
+                return res.status(400).json("用户不存在")
             }
             // 密码匹配
             bcrypt.compare(password, user.password)

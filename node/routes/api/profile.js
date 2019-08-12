@@ -78,7 +78,7 @@ router.delete("/delete/:id", passport.authenticate("jwt", { session: false }), (
         .then(profile => {
             profile.save().then(profile => res.json(profile))
         })
-        .catch(err => res.status(404).json("删除失败"))
+        .catch(err => res.status(400).json("删除失败"))
 })
 
 module.exports = router
