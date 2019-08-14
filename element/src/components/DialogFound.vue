@@ -93,7 +93,7 @@ export default {
               });
             });
           } else {
-            editProfile(this.form.id).then(res => {
+            editProfile(this.form.id, this.form).then(res => {
               this.$message({
                 message: "编辑成功！",
                 type: "success"

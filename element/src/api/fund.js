@@ -22,9 +22,10 @@ export const addProfile = (data) => {
     })
 }
 
-export const editProfile = (id) => {
+export const editProfile = (id, data) => {
     return request({
         url: `/api/profiles/edit/${id}`,
+        data,
         method: "POST"
     })
 }

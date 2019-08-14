@@ -26,7 +26,7 @@ service.interceptors.request.use(config => {
     startLoading();
     // 判断TOKEN
     if (localStorage.TOKEN) {
-        // 设置统一请求header
+        // 设置统一请求header 这个相当于token
         config.headers.Authorization = localStorage.TOKEN
     }
     return config;
